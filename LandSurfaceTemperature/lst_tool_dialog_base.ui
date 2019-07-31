@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="4.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>LandSurfaceTemperatureDialogBase</class>
  <widget class="QDialog" name="LandSurfaceTemperatureDialogBase">
@@ -234,7 +234,7 @@
         <widget class="QComboBox" name="radFormat"/>
        </item>
       </layout>
-     </widget>
+    </widget>
      <widget class="QWidget" name="tab_4">
       <attribute name="icon">
        <iconset>
@@ -410,7 +410,7 @@
         </widget>
        </item>
       </layout>
-     </widget>
+    </widget>
      <widget class="QWidget" name="tab">
       <attribute name="icon">
        <iconset>
@@ -473,9 +473,9 @@
        <item row="14" column="3">
         <widget class="QPushButton" name="NDVI_btnClose">
          <property name="text">
-          <string>Close</string>
+          <string>Close_NDVI</string>
          </property>
-        </widget>
+       </widget>
        </item>
        <item row="1" column="0">
         <widget class="QLabel" name="ndviLblRed">
@@ -1144,7 +1144,7 @@
         </layout>
        </widget>
       </widget>
-     </widget>
+    </widget>
      <widget class="QWidget" name="tab_5">
       <attribute name="icon">
        <iconset>
@@ -2381,7 +2381,7 @@
         </widget>
        </item>
       </layout>
-     </widget>
+    </widget>
      <widget class="QWidget" name="tab_13">
       <attribute name="title">
        <string>About</string>

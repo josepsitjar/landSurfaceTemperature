@@ -1,12 +1,12 @@
 #/***************************************************************************
-# LandSurfaceTemperature
+# LandTemperature
 #
-# This tool extracts Land Surface Temperature from satellite imagery
+# This plugin is to calculate Land Surface Temperature
 #							 -------------------
-#		begin				: 2015-11-10
+#		begin				: 2019-07-22
 #		git sha				: $Format:%H$
-#		copyright			: (C) 2015 by Milton Isaya/Anadolu University
-#		email				: milton_issaya@hotmail.com
+#		copyright			: (C) 2019 by Josep Sitjar
+#		email				: josep.sitjar@udg.edu
 # ***************************************************************************/
 #
 #/***************************************************************************
@@ -50,10 +50,22 @@ UI_FILES = lst_tool_dialog_base.ui
 
 EXTRAS = metadata.txt icon.png
 
+EXTRA_DIRS =
+
 COMPILED_RESOURCE_FILES = resources.py
 
 PEP8EXCLUDE=pydev,resources.py,conf.py,third_party,ui
 
+# QGISDIR points to the location where your plugin should be installed.
+# This varies by platform, relative to your HOME directory:
+#	* Linux:
+#	  .local/share/QGIS/QGIS3/profiles/default/python/plugins/
+#	* Mac OS X:
+#	  Library/Application Support/QGIS/QGIS3/profiles/default/python/plugins
+#	* Windows:
+#	  AppData\Roaming\QGIS\QGIS3\profiles\default\python\plugins'
+
+QGISDIR=/home/josep/.local/share/QGIS/QGIS3/profiles/default/python/plugins/
 
 #################################################
 # Normally you would not need to edit below here
@@ -65,14 +77,19 @@ PLUGIN_UPLOAD = $(c)/plugin_upload.py
 
 RESOURCE_SRC=$(shell grep '^ *<file' resources.qrc | sed 's@</file>@@g;s/.*>//g' | tr '\n' ' ')
 
-QGISDIR=.qgis2
-
-default: compile
+.PHONY: default
+default:
+	@echo While you can use make to build and deploy your plugin, pb_tool
+	@echo is a much better solution.
+	@echo A Python script, pb_tool provides platform independent management of
+	@echo your plugins and runs anywhere.
+	@echo You can install pb_tool using: pip install pb_tool
+	@echo See https://g-sherman.github.io/plugin_build_tool/ for info.
 
 compile: $(COMPILED_RESOURCE_FILES)
 
 %.py : %.qrc $(RESOURCES_SRC)
-	pyrcc4 -o $*.py  $<
+	pyrcc5 -o $*.py  $<
 
 %.qm : %.ts
 	$(LRELEASE) $<
@@ -110,6 +127,9 @@ deploy: compile doc transcompile
 	cp -vf $(EXTRAS) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vfr i18n $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)
 	cp -vfr $(HELP) $(HOME)/$(QGISDIR)/python/plugins/$(PLUGINNAME)/help
+	# Copy extra directories if any
+	(foreach EXTRA_DIR,(EXTRA_DIRS), cp -R (EXTRA_DIR) (HOME)/(QGISDIR)/python/plugins/(PLUGINNAME)/;)
+
 
 # The dclean target removes compiled python files from plugin directory
 # also deletes any .git entry
